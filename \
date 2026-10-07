@@ -1,0 +1,12 @@
+import datetime
+from todo import Task, Todo_List
+
+if __name__ == "__main__":
+    task_1 = Task("Wykinut musor",datetime.datetime(2026, 9, 19))
+    task_2 = Task("Morning journaling", datetime.datetime(2026, 9, 20))
+
+    todo = Todo_List()
+    todo.add(task_1)
+    todo.print()
+
+
