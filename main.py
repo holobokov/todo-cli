@@ -12,8 +12,11 @@ def parse_args():
     parser_add.add_argument("description")
 
     parser_update = subparser.add_parser("update")
-    parser_update.add_argument("id", type=int)
+    parser_update.add_argument("update_id", type=int)
     parser_update.add_argument("new_description")
+
+    parser_delete = subparser.add_parser("delete")
+    parser_delete.add_argument("delete_id", type=int)
 
     parser_list = subparser.add_parser("list")
 
@@ -25,9 +28,14 @@ def process_args(args):
         todo.add(new_task)
     elif args.command == "update":
         for task in todo.tasks:
-            if task.id == args.id:
-                task.text = args.new_description
-    elif args.command == "list":
+            if task.id == args.update_id:
+                todo.update(task, args.new_description)
+    elif args.command == "delete":
+        for task in todo.tasks:
+            if task.id == args.delete_id:
+                todo.delete(task)
+#    elif args.command == "list":
+#        todo.print()
 
 
 
@@ -35,6 +43,7 @@ if __name__ == "__main__":
     db = DBManager(host="localhost", user="holobokov")
 
     todo = Todo_List(db)
+    todo.read_db()
 
     args = parse_args()
     process_args(args)

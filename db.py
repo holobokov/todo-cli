@@ -24,6 +24,20 @@ class DBManager:
             new_id = cur.fetchone()[0]
             self.conn.commit()
             return new_id
+    
+    def update(self, id: int, new_text: str):
+        with self.conn.cursor() as cur:
+            cur.execute("""
+                update tasks 
+                set text = %s 
+                where id = %s;
+            """, (new_text, id))
+            self.conn.commit()
+
+    def delete(self, id: int):
+        with self.conn.cursor() as cur:
+            cur.execute("delete from tasks where id = %s;", (id,))
+            self.conn.commit()
 
     def read(self):
         task_list = []

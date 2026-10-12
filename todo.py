@@ -25,6 +25,15 @@ class Todo_List:
         task.id = new_id
         self.tasks.append(task)
 
+    def update(self, task, new_text: str):
+        task.text = new_text
+        self.db.update(task.id, new_text)
+        
+    def delete(self, task):
+        self.tasks.remove(task)
+        self.db.delete(task.id)
+
+
     def print(self):
         self.read_db()
         for task in self.tasks:
